@@ -3,6 +3,7 @@ package com.example.rachel.vetapplove;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         etUsername=(EditText)findViewById(R.id.etUsername);
         etPasswrd=(EditText)findViewById(R.id.etPasswrd);
         btnSignIn=(Button)findViewById(R.id.btnSignIn);
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
 
     private void signup() {
         Intent intent=new Intent(getApplicationContext(),SignUp.class);
@@ -57,9 +62,23 @@ public class MainActivity extends AppCompatActivity {
     private void registerUser() {
         String username=etUsername.getText().toString().toLowerCase();
         String password=etPasswrd.getText().toString().toLowerCase();
-        password=Encriptacio.md5(password);//encriptamos
+
         TareaWSObtener1 tareaEntrar = new TareaWSObtener1();
-        tareaEntrar.execute("http://vetapplove.xyz/index.php", username, password);
+        if(!username.equals("")&& !password.equals("")){
+            password=Encriptacio.md5(password);//encriptamos
+            tareaEntrar.execute("http://vetapplove.xyz/index.php", username, password);
+        }
+        else{
+            CharSequence text = "Fill all the fields please!!";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+            int offsetX = 50;
+            int offsetY = 25;
+            toast.setGravity(Gravity.CENTER| Gravity.CENTER, offsetX, offsetY);
+            toast.show();
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        }
     }
 
     public class TareaWSObtener1 extends AsyncTask<String, Void, JSONObject> {
@@ -92,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     parametros.putString("usuario", resultado2);
 
                     //Define la actividad
-                    Intent i = new Intent(getApplicationContext(), Menu1.class);
+                    Intent i = new Intent(getApplicationContext(), Navigation.class);
 
                     i.putExtras(parametros);
 
@@ -173,5 +192,6 @@ public class MainActivity extends AppCompatActivity {
             return response;
         }
     }
+
 
 }

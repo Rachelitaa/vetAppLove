@@ -44,10 +44,23 @@ public class SignUp extends AppCompatActivity {
                 String username = etUsername.getText().toString().toLowerCase();
                 String email = etEmail.getText().toString().toLowerCase();
                 String password = etPasswrd.getText().toString().toLowerCase();
-                password=Encriptacio.md5(password);//encriptamos
-                TareaObtener tarea = new TareaObtener();
-                //tarea.execute("http://vetapplove.000webhostapp.com/registroVetApp.php", username, email, passwrd);
-                tarea.execute("http://vetapplove.xyz/registroVetApp.php", username, password, email);
+                if(!username.equals("")&&!email.equals("")&&!email.equals("")){
+                    password=Encriptacio.md5(password);//encriptamos
+                    TareaObtener tarea = new TareaObtener();
+                    //tarea.execute("http://vetapplove.000webhostapp.com/registroVetApp.php", username, email, passwrd);
+                    tarea.execute("http://vetapplove.xyz/registroVetApp.php", username, password, email);
+                }else{
+                    CharSequence text = "Fill all the fields please!!";
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                    int offsetX = 50;
+                    int offsetY = 25;
+                    toast.setGravity(Gravity.CENTER| Gravity.CENTER, offsetX, offsetY);
+                    toast.show();
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                }
+
             }
         });
     }
