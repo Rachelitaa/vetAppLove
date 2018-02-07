@@ -1,15 +1,18 @@
 package com.example.rachel.vetapplove;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -17,10 +20,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,62 +86,81 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class TareaWSObtener1 extends AsyncTask<String, Void, JSONObject> {
+    public class TareaWSObtener1 extends AsyncTask<String, Void, String[]> {
 
-
-        protected JSONObject doInBackground(String... params) {
+        Bitmap profileImagenBitmap = null;
+        protected String[] doInBackground(String... params) {
             String respStr = ConexionHTTP(params[0], params[1], params[2]);
-            JSONObject jsonObject=null;
+            JSONObject jsonObject = null;
+            String resultadoMensaje = null;
+            String datos[]=new String[3];
+            String rutaImagen="",resultadoUsuario="" ;
 
             try {
-                jsonObject=new JSONObject(respStr);
+                jsonObject = new JSONObject(respStr);
+                resultadoMensaje = jsonObject.getString("mensaje");
+                if (resultadoMensaje.equals("OK")) {
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return jsonObject;
-        }
-
-        protected void onPostExecute(JSONObject result) {
-            String resultado1= null;
-
-            try {
-                resultado1 = result.getString("mensaje");
-                if(resultado1.equals("OK")) {
-
-                    String resultado2 = result.getString("usuario");
+                    resultadoUsuario = jsonObject.getString("usuario");
+                    rutaImagen = jsonObject.getString("rutaImagen");
+                    datos[0]=resultadoUsuario;
+                    datos[1]=rutaImagen;
+                    try {
+                        URL urlImagen = new URL("http://vetapplove.xyz/imgUsers/" + rutaImagen);//abro coneexión para esta ruta de imagen
+                        HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
+                        connImagen.connect();
+                        profileImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
 
 
-                    Bundle parametros = new Bundle();
-                    parametros.putString("usuario", resultado2);
+                    } catch (MalformedURLException exep) {
+                        exep.printStackTrace();
+                    } catch (IOException exe) {
+                        exe.printStackTrace();
+                    }
 
-                    //Define la actividad
-                    Intent i = new Intent(getApplicationContext(), Navigation.class);
 
-                    i.putExtras(parametros);
-
-                    //Inicia la actividad
-                    startActivity(i);
-
-                }
-                else{
-
+                } else {
                     CharSequence text = "Invalid user or password!!";
                     int duration = Toast.LENGTH_LONG;
 
                     Toast toast = Toast.makeText(getApplicationContext(), text, duration);
                     int offsetX = 50;
                     int offsetY = 25;
-                    toast.setGravity(Gravity.CENTER| Gravity.CENTER, offsetX, offsetY);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER, offsetX, offsetY);
                     toast.show();
-                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
-
-
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 }
-
             } catch (JSONException e) {
-                e.printStackTrace();
+                e.printStackTrace();}
+            return datos;
+        }
+
+
+
+
+        protected void onPostExecute(String datos[]) {
+
+            if(datos!=null){
+                //Convertimos la imagen en formato Bitmap a String
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                profileImagenBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] imagen = stream.toByteArray();
+                String profileImagenString = Base64.encodeToString(imagen, Base64.DEFAULT);
+
+                Bundle parametros = new Bundle();
+                parametros.putString("usuario", datos[0]);//pasamos al Navigation el nombre del usuario y el nombre de la imagen de éste
+                parametros.putString("rutaImagen",datos[1]);
+                parametros.putString("profileImagenString",profileImagenString);
+
+                //Define la actividad
+                Intent i = new Intent(getApplicationContext(), Navigation.class);
+
+                i.putExtras(parametros);
+
+                //Inicia la actividad
+                startActivity(i);
             }
+
         }
 
         private String ConexionHTTP(String urll, String usuario, String password) {
@@ -195,3 +219,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
