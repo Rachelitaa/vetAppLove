@@ -87,60 +87,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class TareaWSObtener1 extends AsyncTask<String, Void, String[]> {
-
+        boolean existeUsuario=false;
         Bitmap profileImagenBitmap = null;
         protected String[] doInBackground(String... params) {
             String respStr = ConexionHTTP(params[0], params[1], params[2]);
             JSONObject jsonObject = null;
             String resultadoMensaje = null;
-            String datos[]=new String[3];
+            String datos[]=new String[2];
+
             String rutaImagen="",resultadoUsuario="" ;
 
             try {
                 jsonObject = new JSONObject(respStr);
                 resultadoMensaje = jsonObject.getString("mensaje");
                 if (resultadoMensaje.equals("OK")) {
-
+                    existeUsuario = true;
                     resultadoUsuario = jsonObject.getString("usuario");
                     rutaImagen = jsonObject.getString("rutaImagen");
-                    datos[0]=resultadoUsuario;
-                    datos[1]=rutaImagen;
-                    try {
-                        URL urlImagen = new URL("http://vetapplove.xyz/imgUsers/" + rutaImagen);//abro coneexión para esta ruta de imagen
-                        HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
-                        connImagen.connect();
-                        profileImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
+                    datos[0] = resultadoUsuario;
+                    datos[1] = rutaImagen;
 
-
-                    } catch (MalformedURLException exep) {
-                        exep.printStackTrace();
-                    } catch (IOException exe) {
-                        exe.printStackTrace();
-                    }
-
-
-                } else {
-                    CharSequence text = "Invalid user or password!!";
-                    int duration = Toast.LENGTH_LONG;
-
-                    Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                    int offsetX = 50;
-                    int offsetY = 25;
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER, offsetX, offsetY);
-                    toast.show();
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                   URL urlImagen = new URL("http://vetapplove.xyz/imgUsers/" + rutaImagen);//abro coneexión para esta ruta de imagen
+                    HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
+                    connImagen.connect();
+                    profileImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
+                    connImagen.disconnect();
                 }
+
             } catch (JSONException e) {
-                e.printStackTrace();}
+                e.printStackTrace();
+            } catch (MalformedURLException exep) {
+                exep.printStackTrace();
+            } catch (IOException exe) {
+                exe.printStackTrace();
+            }
+
             return datos;
         }
 
-
-
-
         protected void onPostExecute(String datos[]) {
 
-            if(datos!=null){
+            if(existeUsuario==true){
                 //Convertimos la imagen en formato Bitmap a String
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 profileImagenBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -159,6 +146,17 @@ public class MainActivity extends AppCompatActivity {
 
                 //Inicia la actividad
                 startActivity(i);
+            }else{
+                CharSequence text = "Invalid user or password!!";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                int offsetX = 50;
+                int offsetY = 25;
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER, offsetX, offsetY);
+                toast.show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
             }
 
         }
