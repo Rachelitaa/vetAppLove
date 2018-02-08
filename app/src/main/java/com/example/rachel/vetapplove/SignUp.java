@@ -2,14 +2,17 @@ package com.example.rachel.vetapplove;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -27,17 +30,29 @@ import java.net.URL;
 public class SignUp extends AppCompatActivity {
     EditText etUsername,etPasswrd,etEmail;
     Button btnSignUp;
+    ImageView foto_gallery;
+    private static final int ACTIVITAT_SELECCIONAR_IMATGE = 1;
+    Uri imageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        etPasswrd = (EditText) findViewById(R.id.etPasswrd);
-        btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        //etUsername = (EditText) findViewById(R.id.etUsername);
+        //etEmail = (EditText) findViewById(R.id.etEmail);
+        //etPasswrd = (EditText) findViewById(R.id.etPasswrd);
+        //btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        foto_gallery = (ImageView)findViewById(R.id.foto_gallery);
 
+        foto_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+        
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        /*btnSignUp.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Context signup = getApplicationContext();
@@ -62,11 +77,41 @@ public class SignUp extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
+    }
+    private void openGallery(){
+        Intent i = new Intent(
+                Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        );
+        startActivityForResult(i, ACTIVITAT_SELECCIONAR_IMATGE);
     }
 
 
-public class TareaObtener extends AsyncTask<String, Void,JSONObject> {
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case ACTIVITAT_SELECCIONAR_IMATGE:
+                if (resultCode == RESULT_OK) {
+                    Uri seleccio = intent.getData();
+                    String[] columna = {MediaStore.Images.Media.DATA};
+
+                    Cursor cursor = getContentResolver().query(
+                            seleccio, columna, null, null, null);
+                    cursor.moveToFirst();
+
+                    int indexColumna = cursor.getColumnIndex(columna[0]);
+                    String rutaFitxer = cursor.getString(indexColumna);
+                    cursor.close();
+                    foto_gallery.setImageURI(seleccio);
+                }
+        }
+    }
+
+
+
+    public class TareaObtener extends AsyncTask<String, Void,JSONObject> {
     Context signup=getApplicationContext();
     protected JSONObject doInBackground(String... params) {
         String respStr = ConexionHTTP(params[0], params[1], params[2], params[3]);
