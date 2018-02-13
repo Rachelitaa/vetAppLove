@@ -66,7 +66,7 @@ public class Navigation extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.tvName);
         ImageView profilePhoto=(ImageView)hView.findViewById(R.id.profilePhoto);
         nav_user.setText(getIntent().getExtras().getString("usuario"));
-        String rutaImagen=getIntent().getExtras().getString("rutaImagen");
+        //String rutaImagen=getIntent().getExtras().getString("rutaImagen");
         String profileImagenString=getIntent().getExtras().getString("profileImagenString");
 
         //Convertimos la imagen en formato String a Bitmap.

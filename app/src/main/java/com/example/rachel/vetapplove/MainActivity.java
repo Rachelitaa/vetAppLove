@@ -1,8 +1,11 @@
 package com.example.rachel.vetapplove;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String username=etUsername.getText().toString().toLowerCase();
         String password=etPasswrd.getText().toString().toLowerCase();
 
+
         TareaWSObtener1 tareaEntrar = new TareaWSObtener1();
         if(!username.equals("")&& !password.equals("")){
             password=Encriptacio.md5(password);//encriptamos
@@ -86,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class TareaWSObtener1 extends AsyncTask<String, Void, String[]> {
+    public class TareaWSObtener1 extends AsyncTask<String, Void, String> {
         boolean existeUsuario=false;
         Bitmap profileImagenBitmap = null;
-        protected String[] doInBackground(String... params) {
+        String username="";
+        protected String doInBackground(String... params) {
             String respStr = ConexionHTTP(params[0], params[1], params[2]);
             JSONObject jsonObject = null;
             String resultadoMensaje = null;
-            String datos[]=new String[2];
-
+            //String datos[]=new String[2];
             String rutaImagen="",resultadoUsuario="" ;
 
             try {
@@ -103,15 +108,20 @@ public class MainActivity extends AppCompatActivity {
                 if (resultadoMensaje.equals("OK")) {
                     existeUsuario = true;
                     resultadoUsuario = jsonObject.getString("usuario");
-                    rutaImagen = jsonObject.getString("rutaImagen");
-                    datos[0] = resultadoUsuario;
-                    datos[1] = rutaImagen;
+                    //rutaImagen = jsonObject.getString("rutaImagen");
+                    username= resultadoUsuario;
+                    //String datos= resultadoUsuario;
+                    //datos[1] = rutaImagen;
 
-                   URL urlImagen = new URL("http://vetapplove.xyz/imgUsers/" + rutaImagen);//abro coneexión para esta ruta de imagen
+                   URL urlImagen = new URL("http://vetapplove.xyz/imgUsers/" + username+".jpg");//abro coneexión para esta ruta de imagen
                     HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
                     connImagen.connect();
                     profileImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
+
+
                     connImagen.disconnect();
+
+
                 }
 
             } catch (JSONException e) {
@@ -122,21 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 exe.printStackTrace();
             }
 
-            return datos;
+            return username;
         }
 
-        protected void onPostExecute(String datos[]) {
+        protected void onPostExecute(String username) {
 
             if(existeUsuario==true){
-                //Convertimos la imagen en formato Bitmap a String
+                //Convertimos la imagen de formato Bitmap a String para enviarla a otra activity
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 profileImagenBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] imagen = stream.toByteArray();
                 String profileImagenString = Base64.encodeToString(imagen, Base64.DEFAULT);
-
                 Bundle parametros = new Bundle();
-                parametros.putString("usuario", datos[0]);//pasamos al Navigation el nombre del usuario y el nombre de la imagen de éste
-                parametros.putString("rutaImagen",datos[1]);
+                parametros.putString("usuario",username);//pasamos al Navigation el nombre del usuario y su imagen
+                //parametros.putString("rutaImagen",datos[1]);
                 parametros.putString("profileImagenString",profileImagenString);
 
                 //Define la actividad
@@ -214,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
             return response;
         }
     }
-
 
 }
 
