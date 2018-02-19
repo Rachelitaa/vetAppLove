@@ -1,11 +1,8 @@
-package com.example.rachel.vetapplove;
+package com.example.rachel.vetApp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +12,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -24,7 +20,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -47,19 +42,17 @@ public class MainActivity extends AppCompatActivity {
         btnSignUp=(Button)findViewById(R.id.btnSignUp);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 registerUser();
             }
         });
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signup();
             }
         });
-
-
-
     }
 
 
@@ -79,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             tareaEntrar.execute("http://vetapplove.xyz/index.php", username, password);
         }
         else{
-            CharSequence text = "Fill all the fields please!!";
+            CharSequence text = "Por favor rellene todos los campos.";
             int duration = Toast.LENGTH_LONG;
 
             Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -149,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
                 parametros.putString("profileImagenString",profileImagenString);
 
                 //Define la actividad
-                Intent i = new Intent(getApplicationContext(), Navigation.class);
+                Intent i = new Intent(getApplicationContext(),Navigation.class);
 
                 i.putExtras(parametros);
 
                 //Inicia la actividad
                 startActivity(i);
             }else{
-                CharSequence text = "Invalid user or password!!";
+                CharSequence text = "Usuario/password incorrectos";
                 int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(getApplicationContext(), text, duration);

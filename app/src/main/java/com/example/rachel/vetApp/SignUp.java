@@ -1,10 +1,9 @@
-package com.example.rachel.vetapplove;
+package com.example.rachel.vetApp;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -25,10 +24,8 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -85,7 +82,7 @@ public class SignUp extends AppCompatActivity {
                     }
                     tarea.execute("http://vetapplove.xyz/registroVetApp.php", username, password, email,imagen);
                 }else{
-                    CharSequence text = "Fill all the fields please!!";
+                    CharSequence text = "Por favor rellene todos los campos.";
                     int duration = Toast.LENGTH_LONG;
 
                     Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -172,7 +169,7 @@ public class SignUp extends AppCompatActivity {
         try {
             resultado = jsonObject.getString("mensaje");
             if (resultado.equals("existe")) {
-                ToastsVarios("This username already exists.Type another username please",signup);
+                ToastsVarios("Este usuario ya existe. Por favor introduzca otro nombre para su usuario.",signup);
 
             } else {
                 Intent i = new Intent(getApplicationContext(),Navigation.class);

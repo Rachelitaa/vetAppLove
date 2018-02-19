@@ -1,4 +1,4 @@
-package com.example.rachel.vetapplove;
+package com.example.rachel.vetApp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

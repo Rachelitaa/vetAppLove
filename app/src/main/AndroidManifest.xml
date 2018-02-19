@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rachel.vetapplove">
+    package="com.example.rachel.vetApp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -23,7 +23,27 @@
         <activity
             android:name=".Navigation"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PerfilMascotaActivity"
+            android:label="@string/title_activity_perfil_mascota"
+            android:parentActivityName=".Navigation"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rachel.vetApp.Navigation" />
+        </activity>
+        <activity
+            android:name=".addPetActivity"
+            android:label="@string/title_activity_add_pet"
+            android:parentActivityName=".PerfilMascotaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rachel.vetApp.PerfilMascotaActivity" />
+        </activity>
+        <activity android:name=".AdopcionesAnadir" />
+        <activity android:name=".AdopcionesListado"></activity>
     </application>
 
 </manifest>

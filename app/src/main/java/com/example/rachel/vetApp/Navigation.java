@@ -1,5 +1,6 @@
-package com.example.rachel.vetapplove;
+package com.example.rachel.vetApp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,10 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Base64;
@@ -27,11 +25,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +36,6 @@ public class Navigation extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,8 +75,7 @@ public class Navigation extends AppCompatActivity
 
             ImageView imageView = (ImageView) findViewById(R.id.profilePhoto);
             imageView.setImageDrawable(roundedDrawable);*/
-
-
+            navigationView.getMenu().getItem(3).setChecked(true);
         } catch(Exception e) {
             e.getMessage();
         }
@@ -136,14 +122,16 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_cita) {
+        }else if (id == R.id.nav_adopcion) {
+            Intent intent=new Intent(getApplicationContext(),AdopcionesListado.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_vetsMap) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_perfilMascota) {
+            Intent intent = new Intent(getApplicationContext(), PerfilMascotaActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

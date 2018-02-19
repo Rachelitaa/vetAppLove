@@ -1,4 +1,4 @@
-package com.example.rachel.vetapplove;
+package com.example.rachel.vetApp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
