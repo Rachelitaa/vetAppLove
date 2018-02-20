@@ -1,15 +1,19 @@
 package com.example.rachel.vetApp;
 
+import android.graphics.Bitmap;
+
 public class Adopcion {
-    private int idImagen;
+    private int imagenIcono;
+    private Bitmap adopcionImagenBitmap;
     private String tipoAnimal;
     private String nombre;
     private String ciudad;
     private String pais;
 
-    public Adopcion(int idImagen,String tipoAnimal, String nombre, String ciudad, String pais) {
+    public Adopcion(int imagenIcono,Bitmap adopcionImagenBitmap,String tipoAnimal, String nombre, String ciudad, String pais) {
         this.tipoAnimal=tipoAnimal;
-        this.idImagen = idImagen;
+        this.imagenIcono = imagenIcono;
+        this.adopcionImagenBitmap=adopcionImagenBitmap;
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.pais = pais;
@@ -33,7 +37,7 @@ public class Adopcion {
     }
 
     public int getIdImagen() {
-        return idImagen;
+        return imagenIcono;
     }
 
     public String getNombre() {
@@ -48,8 +52,13 @@ public class Adopcion {
         return pais;
     }
 
-    public void setIdImagen(int idImagen) {
-        this.idImagen = idImagen;
+    public void setImagenIcono(int imagenIcono) {
+        this.imagenIcono = imagenIcono;
+    }
+
+    public int getImagenIcono() {
+
+        return imagenIcono;
     }
 
     public void setNombre(String nombre) {
@@ -62,5 +71,13 @@ public class Adopcion {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public Bitmap getAdopcionImagenBitmap() {
+        return adopcionImagenBitmap;
+    }
+
+    public void setAdopcionImagenBitmap(Bitmap adopcionImagenBitmap) {
+        this.adopcionImagenBitmap = adopcionImagenBitmap;
     }
 }

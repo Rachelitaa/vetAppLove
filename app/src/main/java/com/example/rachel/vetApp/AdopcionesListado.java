@@ -48,58 +48,60 @@ public class AdopcionesListado extends AppCompatActivity {
         tareaEntrar.execute("http://vetapplove.xyz/mostrarAdopciones.php");
     }
 
-    public class TareaObtenerAdopciones extends AsyncTask<String, Void, JSONArray> {
+    public class TareaObtenerAdopciones extends AsyncTask<String, Void, ArrayList<Adopcion>> {
 
-        protected JSONArray doInBackground(String... params) {
-            String respStr = ConexionHTTP(params[0]);
-            JSONArray jsonArray = null;
+        protected ArrayList<Adopcion> doInBackground(String... params) {
 
-            try {
-                jsonArray = new JSONArray(respStr);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return jsonArray;
-        }
-
-        protected void onPostExecute(JSONArray jsonArray) {
-            String resultado[] = null;
             Adopcion adopcion = null;
-            Bitmap profileImagenBitmap=null;
+            Bitmap adopcionImagenBitmap = null;
             int idImagen = 0;
             String tipoAnimal = "", nombreAnimal = "", ciudad = "", pais = "";
             ArrayList<Adopcion> adopciones = new ArrayList<Adopcion>();
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = jsonArray.getJSONObject(i);
-                    idImagen = Integer.valueOf(jsonObject.getString("id"));
-                    tipoAnimal = jsonObject.getString("tipoAnimal");
-                    nombreAnimal = jsonObject.getString("nombreAnimal");
-                    ciudad = jsonObject.getString("ciudad");
-                    pais = jsonObject.getString("pais");
-                    adopciones.add(new Adopcion(R.drawable.vetsmap,tipoAnimal, nombreAnimal, ciudad, pais));
+            String respStr = ConexionHTTP(params[0]);
+            try {
+                JSONArray jsonArray = new JSONArray(respStr);
 
-                    /*//Descargamos la imagen asociada al animal en adopción
-                    URL urlImagen = new URL("http://vetapplove.xyz/imgAdopciones/" + idImagen+".jpg");//abro coneexión para esta ruta de imagen
-                    HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
-                    connImagen.connect();
-                    profileImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
-                    connImagen.disconnect();*/
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        idImagen = Integer.valueOf(jsonObject.getString("id"));
+                        tipoAnimal = jsonObject.getString("tipoAnimal");
+                        nombreAnimal = jsonObject.getString("nombreAnimal");
+                        ciudad = jsonObject.getString("ciudad");
+                        pais = jsonObject.getString("pais");
 
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
+                        //Descargamos la imagen asociada al animal en adopción
+                        URL urlImagen = new URL("http://vetapplove.xyz/imgAdopciones/" + idImagen + ".jpg");//abro coneexión para esta ruta de imagen
+                        HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
+                        connImagen.connect();
+                        adopcionImagenBitmap = BitmapFactory.decodeStream(connImagen.getInputStream());
+                        connImagen.disconnect();
+                        adopciones.add(new Adopcion(R.drawable.vetsmap, adopcionImagenBitmap, tipoAnimal, nombreAnimal, ciudad, pais));//instanciamos el objeto.
+
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
+                    }
                 }
+
+            } catch (JSONException e3) {
+                e3.printStackTrace();
             }
-            lvAdopciones = (ListView) findViewById(R.id.lvAdopciones);
-            AdopcionesAdapter adapter = new AdopcionesAdapter(getApplicationContext(),R.layout.entrada_adopciones,adopciones);
-            lvAdopciones.setAdapter(adapter);
-
-
+            return adopciones;
         }
+
+        protected void onPostExecute(ArrayList<Adopcion> adopciones) {
+            lvAdopciones = (ListView) findViewById(R.id.lvAdopciones);
+            AdopcionesAdapter adapter = new AdopcionesAdapter(getApplicationContext(), R.layout.entrada_adopciones, adopciones);
+            lvAdopciones.setAdapter(adapter);
+        }
+    }
+
 
         private String ConexionHTTP(String urll) {
             URL url = null;
@@ -159,4 +161,4 @@ public class AdopcionesListado extends AppCompatActivity {
 
 
 
-}
+

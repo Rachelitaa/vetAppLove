@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 //Inicia la actividad
                 startActivity(i);
             }else{
+                //mostramos toast
                 CharSequence text = "Usuario/password incorrectos";
                 int duration = Toast.LENGTH_LONG;
 

@@ -1,6 +1,7 @@
 package com.example.rachel.vetApp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,19 +15,21 @@ import com.example.rachel.vetApp.Adopcion;
 import com.example.rachel.vetApp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdopcionesAdapter extends ArrayAdapter<Adopcion> {
     Context context;
     int resourceIcon;
-    //int resource
     ArrayList<Adopcion>adopciones;
 
-    public AdopcionesAdapter(@NonNull Context context, int resourceIcon,ArrayList<Adopcion>adopciones) {
-        super(context, resourceIcon,adopciones);
+    public AdopcionesAdapter(@NonNull Context context,int resourceIcon,ArrayList<Adopcion>adopciones) {
+        super(context,resourceIcon,adopciones);
         this.context=context;
         this.resourceIcon=resourceIcon;
         this.adopciones=adopciones;
     }
+
+
 
     @NonNull
     @Override
@@ -39,10 +42,12 @@ public class AdopcionesAdapter extends ArrayAdapter<Adopcion> {
         TextView ciudad=(TextView)convertView.findViewById(R.id.tvCiudad);
         TextView pais=(TextView)convertView.findViewById(R.id.tvPais);
         ImageView iconoLocation=(ImageView)convertView.findViewById(R.id.imageViewIcono);
+        ImageView imageViewAdopciones=(ImageView)convertView.findViewById(R.id.imageViewAdopciones);
 
         nombre.setText(adopcion.getNombre());
         ciudad.setText(adopcion.getCiudad());
         pais.setText(adopcion.getPais());
+        imageViewAdopciones.setImageBitmap(adopcion.getAdopcionImagenBitmap());
         iconoLocation.setImageResource(adopcion.getIdImagen());
 
         return convertView;

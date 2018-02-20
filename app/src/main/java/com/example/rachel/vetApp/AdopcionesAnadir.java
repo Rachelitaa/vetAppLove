@@ -91,6 +91,16 @@ public class AdopcionesAnadir extends AppCompatActivity {
                     toast.show();
                     Intent i = new Intent(getApplicationContext(),AdopcionesAnadir.class);
                 }
+                //mostramos toast
+                CharSequence text = "Adopción publicada correctamente. Gracias";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                int offsetX = 50;
+                int offsetY = 25;
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER, offsetX, offsetY);
+                toast.show();
+                Intent i = new Intent(getApplicationContext(),AdopcionesAnadir.class);
 
             }
         });
@@ -149,12 +159,12 @@ public class AdopcionesAnadir extends AppCompatActivity {
         protected Void doInBackground(String... params) {
            ConexionHTTP(params[0], params[1], params[2], params[3],params[4],params[5],params[6],params[7]);
 
-            return null;
+           return null;
         }
 
         protected void onPostExecute() {
-            Intent i = new Intent(getApplicationContext(),Navigation.class);
-            startActivity(i);
+
+
         }
 
         private void ConexionHTTP(String urll, String tipoAnimal,String nombreAnimal,String descripcionAnimal,String telefono,String ciudad,String pais,String imagen) {
