@@ -128,7 +128,8 @@ public class Navigation extends AppCompatActivity
             Intent intent=new Intent(getApplicationContext(),AdopcionesListado.class);
             startActivity(intent);
         } else if (id == R.id.nav_vetsMap) {
-
+            Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_perfilMascota) {
             Intent intent = new Intent(getApplicationContext(), PerfilMascotaActivity.class);
             startActivity(intent);
