@@ -1,17 +1,30 @@
 package com.example.rachel.vetApp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -20,6 +33,8 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
     private ArrayAdapter<String> adapter;
     private ArrayList<String> items;
+
+
 
     public PerfilMascotaActivityFragment() {
     }
@@ -31,23 +46,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
         ListView mascotaList = view.findViewById(R.id.petList);
 
-        String[] data = {
-                "Rachelita"
-        };
-
-        items = new ArrayList<>(Arrays.asList(data));
-
-        adapter = new ArrayAdapter<String>(
-                getContext(),
-                R.layout.petlist,
-                R.id.pets,
-                items
-        );
-
-
-        mascotaList.setAdapter(adapter);
-
-        ImageButton addPet = view.findViewById(R.id.addPet);
+        Button addPet = view.findViewById(R.id.addPet);
         addPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,4 +58,6 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
         return view;
     }
+
+
 }
