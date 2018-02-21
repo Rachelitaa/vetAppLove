@@ -1,5 +1,7 @@
 package com.example.rachel.vetApp;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -8,11 +10,28 @@ import java.io.Serializable;
 
 public class AddPet implements Serializable
 {
+    private Bitmap petlistImg;
     private String nameAddPet;
     private String species;
     private String breed;
     private String bdateAddPet;
     private String genderAddPet;
+
+    public AddPet(Bitmap petlistImg, String nameAddPet, String species)
+    {
+        this.petlistImg = petlistImg;
+        this.nameAddPet = nameAddPet;
+        this.species = species;
+    }
+
+    public AddPet(Bitmap petlistImg, String nameAddPet, String species, String breed, String bdateAddPet, String genderAddPet) {
+        this.petlistImg = petlistImg;
+        this.nameAddPet = nameAddPet;
+        this.species = species;
+        this.breed = breed;
+        this.bdateAddPet = bdateAddPet;
+        this.genderAddPet = genderAddPet;
+    }
 
     public AddPet(String nameAddPet, String species, String breed, String bdateAddPet, String genderAddPet) {
         this.nameAddPet = nameAddPet;
@@ -22,6 +41,13 @@ public class AddPet implements Serializable
         this.genderAddPet = genderAddPet;
     }
 
+    public Bitmap getPetlistImg() {
+        return petlistImg;
+    }
+
+    public void setPetlistImg(Bitmap petlistImg) {
+        this.petlistImg = petlistImg;
+    }
 
     public String getNameAddPet() {
         return nameAddPet;
