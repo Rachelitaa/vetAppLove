@@ -40,15 +40,15 @@ public class AdopcionesAnadir extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopciones_anadir);
 
-        etTipoAnimal = (EditText) findViewById(R.id.etTipoAnimal);
-        etNombre = (EditText) findViewById(R.id.etNombre);
+        etTipoAnimal = (EditText) findViewById(R.id.nameAddPet);
+        etNombre = (EditText) findViewById(R.id.species);
         etDescripcion = (EditText) findViewById(R.id.etDescripcion);
-        etTelefono = (EditText) findViewById(R.id.etTelefono);
+        etTelefono = (EditText) findViewById(R.id.breed);
         etCiudad = (EditText) findViewById(R.id.etCiudad);
         etPais = (EditText) findViewById(R.id.etPais);
         btnPublicar = (Button)findViewById(R.id.btnPublicar);
 
-        foto_gallery = (ImageView)findViewById(R.id.foto_gallery);
+        foto_gallery = (ImageView)findViewById(R.id.imageAddPet);
         foto_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
