@@ -43,8 +43,8 @@ public class addPetActivityFragment extends Fragment {
         etName = view.findViewById(R.id.nameAddPet);
         etSpecies = view.findViewById(R.id.species);
         etBreed = view.findViewById(R.id.breed);
-        //etGender = view.findViewById(R.id.genderAddPet);
-       // etBirthdate = view.findViewById(R.id.bdateAddPet);
+        etGender = view.findViewById(R.id.genderAddPet);
+        etBirthdate = view.findViewById(R.id.bdateAddPet);
 
         btnSavePet = view.findViewById(R.id.imageAddPet);
 

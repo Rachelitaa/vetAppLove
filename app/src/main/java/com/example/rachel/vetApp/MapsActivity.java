@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
         LatLng barcelona = new LatLng(41.390205, 2.154007);
-        mMap.addMarker(new MarkerOptions().position(barcelona).title("Marker in BCN"));
+       // mMap.addMarker(new MarkerOptions().position(barcelona).title("Marker in BCN"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(barcelona));
 
         Button vets = findViewById(R.id.btnvets);
