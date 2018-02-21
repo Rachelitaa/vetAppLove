@@ -4,10 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/vetAppLove.iml" filepath="$PROJECT_DIR$/vetAppLove.iml" />
-<<<<<<< HEAD
-=======
-      <module fileurl="file://C:\Users\Vicky\Documents\GitHub\vetAppLove\vetAppLovev3.iml" filepath="C:\Users\Vicky\Documents\GitHub\vetAppLove\vetAppLovev3.iml" />
->>>>>>> 7d8849df5a55059b00d9fbe0184c55be00de0594
     </modules>
   </component>
 </project>
