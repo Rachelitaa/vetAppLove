@@ -48,7 +48,7 @@ public class SignUp extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPasswrd = (EditText) findViewById(R.id.etPasswrd);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
-        foto_gallery = (ImageView)findViewById(R.id.foto_gallery);
+        foto_gallery = (ImageView)findViewById(R.id.imageAddPet);
 
         foto_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
