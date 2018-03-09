@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -29,7 +30,9 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     EditText etUsername,etPasswrd;
+    ImageView logo;
     Button btnSignIn,btnSignUp;
+    com.bluehomestudio.progressimage.ProgressPicture pawprogress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +43,34 @@ public class MainActivity extends AppCompatActivity {
         etPasswrd=(EditText)findViewById(R.id.etPasswrd);
         btnSignIn=(Button)findViewById(R.id.btnSignIn);
         btnSignUp=(Button)findViewById(R.id.btnSignUp);
+        logo=findViewById(R.id.imageView3);
+        pawprogress = findViewById(R.id.pawProgress);
+        pawprogress.setVisibility(View.GONE);
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etUsername.setVisibility(v.GONE);
+                etPasswrd.setVisibility(v.GONE);
+                btnSignIn.setVisibility(v.GONE);
+                btnSignUp.setVisibility(v.GONE);
+                logo.setVisibility(v.GONE);
+                pawprogress.setVisibility(View.VISIBLE);
+                pawprogress.startAnimation();
                 registerUser();
             }
         });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                etUsername.setVisibility(v.GONE);
+                etPasswrd.setVisibility(v.GONE);
+                btnSignIn.setVisibility(v.GONE);
+                btnSignUp.setVisibility(v.GONE);
+                logo.setVisibility(v.GONE);
+                pawprogress.setVisibility(View.VISIBLE);
+                pawprogress.startAnimation();
                 signup();
             }
         });

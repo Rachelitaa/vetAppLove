@@ -40,6 +40,7 @@ public class SignUp extends AppCompatActivity {
     Uri imageUri;
     Bitmap bitmap=null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,6 @@ public class SignUp extends AppCompatActivity {
         
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
                 Context signup = getApplicationContext();
                 String username = etUsername.getText().toString().toLowerCase();
@@ -81,6 +81,8 @@ public class SignUp extends AppCompatActivity {
 
                     }
                     tarea.execute("http://vetapplove.xyz/registroVetApp.php", username, password, email,imagen);
+
+
                 }else{
                     CharSequence text = "Por favor rellene todos los campos.";
                     int duration = Toast.LENGTH_LONG;
