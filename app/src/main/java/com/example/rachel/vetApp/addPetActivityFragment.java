@@ -59,7 +59,6 @@ public class addPetActivityFragment extends Fragment {
         btnSavePet = view.findViewById(R.id.savePet);
         imgImageAddPet = view.findViewById(R.id.imageAddPet);
 
-
         imgImageAddPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

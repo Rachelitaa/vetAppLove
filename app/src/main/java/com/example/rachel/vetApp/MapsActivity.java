@@ -22,13 +22,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    double latitude;
-    double longitude;
-    GoogleApiClient mgoogleApiClient;
-    Location lastLocation;
-    Marker currentLocationMarker;
-    LocationRequest locationRequest;
-    private int PROXIMITY_RADIUS = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +54,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(barcelona));
 
         Button vets = findViewById(R.id.btnvets);
-        vets.setOnClickListener(new View.OnClickListener() {
-            String  search = "vets";
+     /*   vets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.clear();
 
             }
-        });
+        }); */
     }
 
 
