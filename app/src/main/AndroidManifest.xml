@@ -9,6 +9,12 @@
         android:protectionLevel="signature"
         />
 
+    <!---Calendar-->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_CALENDAR"/>
+
     <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />
 
     <!-- Network connectivity permissions -->
