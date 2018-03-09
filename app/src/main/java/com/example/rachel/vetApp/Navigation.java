@@ -94,25 +94,6 @@ public class Navigation extends AppCompatActivity
         System.out.println(sdf.format(resultdate));
         long endTime=System.currentTimeMillis();
 
-        long startTime =0;
-        long endTime=0;
-
-        String startDate = String.valueOf(System.currentTimeMillis());
-        try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-            startTime=date.getTime();
-        }
-        catch(Exception e){ }
-
-        Calendar cal = Calendar.getInstance();
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("beginTime",startTime);
-        intent.putExtra("allDay", true);
-        intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", endTime);
-        intent.putExtra("title", "A Test Event from android app");
-        startActivity(intent);
 
         ContentValues contentEvent = new ContentValues();
         contentEvent.put("calendar_id", 1);
@@ -126,6 +107,26 @@ public class Navigation extends AppCompatActivity
         getContentResolver().insert(eventsUri, contentEvent);
 */
 
+
+        long startTime =0;
+        long endTime=0;
+
+        String startDate = String.valueOf(System.currentTimeMillis());
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+            startTime=date.getTime();
+        }
+        catch(Exception e){ }
+
+        Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime",cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("allDay", true);
+        intent.putExtra("rrule", "FREQ=YEARLY");
+        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("title", "A Test Event from android app");
+        startActivity(intent);
 
 
     }
