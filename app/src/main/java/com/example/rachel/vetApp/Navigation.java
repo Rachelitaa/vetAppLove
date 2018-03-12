@@ -105,10 +105,7 @@ public class Navigation extends AppCompatActivity
 
         Uri eventsUri = Uri.parse("content://com.android.calendar/events");
         getContentResolver().insert(eventsUri, contentEvent);
-*/
-
-
-        long startTime =0;
+         long startTime =0;
         long endTime=0;
 
         String startDate = String.valueOf(System.currentTimeMillis());
@@ -127,6 +124,10 @@ public class Navigation extends AppCompatActivity
         intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
         intent.putExtra("title", "A Test Event from android app");
         startActivity(intent);
+*/
+
+
+
 
 
     }
