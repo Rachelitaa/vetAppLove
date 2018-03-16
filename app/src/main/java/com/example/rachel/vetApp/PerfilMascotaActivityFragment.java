@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -50,7 +51,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_perfil_mascota, container, false);
 
 
-        Button addPet = view.findViewById(R.id.addPet);
+        FloatingActionButton addPet = view.findViewById(R.id.afegirPet);
         addPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,13 +73,15 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
     private void refresh() {
 
+        String username = getActivity().getIntent().getExtras().getString("username");
+
         TareaObtenerPets tareaObtenerPets = new TareaObtenerPets();
-        tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php");
+        tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php", username);
+
     }
 
     public class TareaObtenerPets extends AsyncTask<String, Void, ArrayList<AddPet>>
     {
-
         protected ArrayList<AddPet> doInBackground(String... params) {
 
             Bitmap petlistImg = null;
@@ -86,7 +89,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
             String petName="", petSpecie="", petRaza="", petBdate="", petSexo="";
             ArrayList<AddPet> pets = new ArrayList<AddPet>();
 
-            String respStr = ConexionHTTP(params[0]);
+            String respStr = ConexionHTTP(params[0], params[1]);
             try {
                 JSONArray jsonArray = new JSONArray(respStr);
 
@@ -94,7 +97,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
                     JSONObject jsonObject = null;
                     try {
                         jsonObject = jsonArray.getJSONObject(i);
-                        idImagen = Integer.valueOf(jsonObject.getString("id"));
+                  //      idImagen = Integer.valueOf(jsonObject.getString("id"));
                         petName = jsonObject.getString("nameAddPet");
                         petSpecie = jsonObject.getString("species");
                         petRaza = jsonObject.getString("breed");
@@ -103,20 +106,20 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
 
                         //Descargamos la imagen asociada al animal en adopción
-                        URL urlImagen = new URL("http://vetapplove.xyz/imgPet/" + idImagen + ".jpg");//abro coneexión para esta ruta de imagen
-                        HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
-                        connImagen.connect();
-                        petlistImg = BitmapFactory.decodeStream(connImagen.getInputStream());
-                        connImagen.disconnect();
-                        pets.add(new AddPet(petlistImg, petName, petSpecie, petRaza, petBdate, petSexo));//instanciamos el objeto.
+                       // URL urlImagen = new URL("http://vetapplove.xyz/imgPet/" + idImagen + ".jpg");//abro coneexión para esta ruta de imagen
+                       //  HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
+                       // connImagen.connect();
+                        //petlistImg = BitmapFactory.decodeStream(connImagen.getInputStream());
+                        //connImagen.disconnect();
+                        pets.add(new AddPet(petName, petSpecie, petRaza, petBdate, petSexo));//instanciamos el objeto.
 
                     } catch (JSONException e1) {
                         e1.printStackTrace();
-                    } catch (MalformedURLException e) {
+                    } /*catch (MalformedURLException e) {
                         e.printStackTrace();
                     } catch (IOException e2) {
                         e2.printStackTrace();
-                    }
+                    }*/
                 }
 
             } catch (JSONException e3) {
@@ -129,20 +132,12 @@ public class PerfilMascotaActivityFragment extends Fragment {
             petList = (ListView) getView().findViewById(R.id.petList);
             PetsAdapter adapter = new PetsAdapter(getContext(), R.layout.petlist, pets);
             petList.setAdapter(adapter);
-           /*super.onPostExecute(pets);
 
-            PetsAdapter adapter = new PetsAdapter(getContext(), R.layout.petlist, pets);
-           adapter.clear();
-
-           for(AddPet pet : pets)
-           {
-               adapter.add(pet);
-           }*/
         }
     }
 
 
-    private String ConexionHTTP(String urll) {
+    private String ConexionHTTP(String urll, String username) {
         URL url = null;
         HttpURLConnection con = null;
         String response = "";
@@ -162,6 +157,16 @@ public class PerfilMascotaActivityFragment extends Fragment {
             con.setDoInput(true);
             con.setDoOutput(true);
 
+            Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("username", username);
+            String query = builder.build().getEncodedQuery();
+
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            //OutputStream out = new BufferedOutputStream(con.getOutputStream());
+            writer.write(query);
+            writer.flush();
+            writer.close();
 
             int responseCode = con.getResponseCode();
 

@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/mascotaList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.rachel.vetApp.PerfilMascotaActivityFragment"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="137dp"
-        tools:showIn="@layout/activity_perfil_mascota">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mascotaList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rachel.vetApp.PerfilMascotaActivityFragment"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="137dp"
+    tools:showIn="@layout/activity_perfil_mascota">
 
     <ListView
         android:id="@+id/petList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addPet"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/addPet"
-        android:layout_width="194dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="8dp"
-        android:background="#83215C"
-        android:text="Añadir Mascota"
-        android:textColor="@android:color/background_light"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/afegirPet"
+        android:layout_width="82dp"
+        android:layout_height="122dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:src="@drawable/addpet"
+        app:backgroundTint="@color/colorpink"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvAdopciones"
-        app:layout_constraintVertical_bias="0.785"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="360dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="345dp" />
 
 </android.support.constraint.ConstraintLayout>
 

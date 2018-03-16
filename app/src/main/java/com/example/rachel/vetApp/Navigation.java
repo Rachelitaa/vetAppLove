@@ -36,6 +36,7 @@ import java.util.Date;
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Bundle parametros = new Bundle();
 
 
     @Override
@@ -59,9 +60,16 @@ public class Navigation extends AppCompatActivity
         View hView =  navigationViewHeader.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.tvName);
         ImageView profilePhoto=(ImageView)hView.findViewById(R.id.profilePhoto);
-        nav_user.setText(getIntent().getExtras().getString("usuario"));
+        String username=getIntent().getExtras().getString("usuario");
+        nav_user.setText(username);
         //String rutaImagen=getIntent().getExtras().getString("rutaImagen");
         String profileImagenString=getIntent().getExtras().getString("profileImagenString");
+
+
+        parametros.putString("usuario",username);//pasamos al PerfilMascota el nombre del usuario
+
+
+
 
         //Convertimos la imagen en formato String a Bitmap.
         try {
@@ -180,6 +188,7 @@ public class Navigation extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_perfilMascota) {
             Intent intent = new Intent(getApplicationContext(), PerfilMascotaActivity.class);
+            intent.putExtras(parametros);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
 
