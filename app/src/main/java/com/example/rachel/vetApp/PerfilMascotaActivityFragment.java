@@ -61,11 +61,15 @@ public class PerfilMascotaActivityFragment extends Fragment {
             }
         });
 
+        String username = getActivity().getIntent().getExtras().getString("usuario");
+
+        TareaObtenerPets tareaObtenerPets = new TareaObtenerPets();
+        tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php", username);
 
         return view;
     }
 
-    @Override
+   /* @Override
     public void onStart() {
         super.onStart();
         refresh();
@@ -78,7 +82,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
         TareaObtenerPets tareaObtenerPets = new TareaObtenerPets();
         tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php", username);
 
-    }
+    }*/
 
     public class TareaObtenerPets extends AsyncTask<String, Void, ArrayList<AddPet>>
     {
