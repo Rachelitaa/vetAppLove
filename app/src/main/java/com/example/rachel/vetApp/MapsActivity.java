@@ -79,9 +79,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-        Button btnBanks = (Button) findViewById(R.id.btnvets);
-        btnBanks.setOnClickListener(new View.OnClickListener() {
-            String search = "bank";
+        Button btnvets = (Button) findViewById(R.id.btnvets);
+        btnvets.setOnClickListener(new View.OnClickListener() {
+            String search = "veterinary_care";
             @Override
             public void onClick(View v) {
                 mMap.clear();
@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 DataTransfer[1] = url;
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsActivity.this, "These are your Nearby Banks! ",
+                Toast.makeText(MapsActivity.this, "Veterinarias a tu alrededor",
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -141,15 +141,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("You are Here!");
+        markerOptions.title("Estas aqui");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        Toast.makeText(MapsActivity.this, "Your Current Location",
+        Toast.makeText(MapsActivity.this, "Ubicacion actual",
                 Toast.LENGTH_LONG).show();
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
 
@@ -191,7 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
-                    Toast.makeText(this, "permission denied",
+                    Toast.makeText(this, "Permiso denegado",
                             Toast.LENGTH_LONG).show();
                 }
                 return;

@@ -16,7 +16,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... params) {
         try {
-            Log.d("GetNearbyBanksData", "doInBackground entered");
+            Log.d("GetNearbyVetsData", "doInBackground entered");
             mMap = (GoogleMap) params[0];
             url = (String) params[1];
             UrlConnection urlConnection = new UrlConnection();
