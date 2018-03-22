@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -36,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
-    private int PROXIMITY_RADIUS = 10000;
+    private int PROXIMITY_RADIUS = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String search = "veterinary_care";
             @Override
             public void onClick(View v) {
-                mMap.clear();
+              mMap.clear();
                 String url = getUrl(latitude, longitude, search);
                 Object[] DataTransfer = new Object[2];
                 DataTransfer[0] = mMap;
