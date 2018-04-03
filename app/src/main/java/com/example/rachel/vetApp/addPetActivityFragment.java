@@ -59,6 +59,7 @@ public class addPetActivityFragment extends Fragment {
         btnSavePet = view.findViewById(R.id.savePet);
         imgImageAddPet = view.findViewById(R.id.imageAddPet);
 
+
         imgImageAddPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +77,9 @@ public class addPetActivityFragment extends Fragment {
                 String bdateAddPet = etBirthdate.getText().toString();
                 String genderAddPet = etGender.getText().toString().toLowerCase();
                 String imageAddPet="";
+                String username = getActivity().getIntent().getExtras().getString("usuario");
+
+
 
 
                 if(!nameAddPet.equals("") && !species.equals("") && !breed.equals("") && !bdateAddPet.equals("") && !genderAddPet.equals(""))
@@ -93,8 +97,7 @@ public class addPetActivityFragment extends Fragment {
                         imageAddPet = convertirImgString(bitmap);
 
                     }
-
-                    tarea.execute("http://vetapplove.xyz/addPet.php", nameAddPet, species, breed, bdateAddPet, genderAddPet, imageAddPet);
+                    tarea.execute("http://vetapplove.xyz/addPet.php", nameAddPet, species, breed, bdateAddPet, genderAddPet, imageAddPet, username);
                     //mostramos toast
                     CharSequence text = "Mascota añadida correctamente. Gracias";
                     int duration = Toast.LENGTH_LONG;
@@ -170,12 +173,12 @@ public class addPetActivityFragment extends Fragment {
     public class TareaObtener extends AsyncTask<String,Void,Void>
     {
         protected Void doInBackground(String... params) {
-            ConexionHTTP(params[0], params[1], params[2], params[3],params[4],params[5],params[6]);
+            ConexionHTTP(params[0], params[1], params[2], params[3],params[4],params[5],params[6], params[7]);
 
             return null;
         }
 
-        private void ConexionHTTP(String urll, String nameAddPet, String species, String breed, String bdateAddPet, String genderAddPet, String imageAddPet ) {
+        private void ConexionHTTP(String urll,  String nameAddPet, String species, String breed, String bdateAddPet, String genderAddPet, String imageAddPet , String username) {
             URL url = null;
             HttpURLConnection con = null;
             String response = "";
@@ -191,13 +194,15 @@ public class addPetActivityFragment extends Fragment {
                 con.setDoInput(true);
                 con.setDoOutput(true);
 
+                //estructura para enviar el POST
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("nameAddPet",nameAddPet) //estructura para enviar el POST
+                        .appendQueryParameter("nameAddPet",nameAddPet)
                         .appendQueryParameter("species",species)
                         .appendQueryParameter("breed",breed)
                         .appendQueryParameter("bdateAddPet",bdateAddPet)
                         .appendQueryParameter("genderAddPet",genderAddPet)
-                        .appendQueryParameter("imageAddPet",imageAddPet);
+                        .appendQueryParameter("imageAddPet",imageAddPet)
+                        .appendQueryParameter("username",username);
 
 
 

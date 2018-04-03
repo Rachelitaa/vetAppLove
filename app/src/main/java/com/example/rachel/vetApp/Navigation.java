@@ -134,10 +134,6 @@ public class Navigation extends AppCompatActivity
         startActivity(intent);
 */
 
-
-
-
-
     }
 
     @Override

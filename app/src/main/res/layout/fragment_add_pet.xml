@@ -8,7 +8,7 @@
     tools:showIn="@layout/activity_add_pet">
 
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/nameAddPet"
         android:layout_width="356dp"
         android:layout_height="wrap_content"

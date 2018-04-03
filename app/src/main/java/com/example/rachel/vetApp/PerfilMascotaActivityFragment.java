@@ -42,6 +42,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
 
 
+
     public PerfilMascotaActivityFragment() {
     }
 
@@ -49,40 +50,38 @@ public class PerfilMascotaActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_mascota, container, false);
-
+        String username = getActivity().getIntent().getExtras().getString("usuario");
 
         FloatingActionButton addPet = view.findViewById(R.id.afegirPet);
         addPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), addPetActivity.class);
+                Bundle parametros = new Bundle();
+                parametros.putString("usuario",username);//pasamos al addPetActivity el nombre del usuario
+                intent.putExtras(parametros);
                 startActivity(intent);
 
             }
         });
 
-        String username = getActivity().getIntent().getExtras().getString("usuario");
-
-        TareaObtenerPets tareaObtenerPets = new TareaObtenerPets();
-        tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php", username);
 
         return view;
     }
 
-   /* @Override
+    @Override
     public void onStart() {
         super.onStart();
         refresh();
     }
 
-    private void refresh() {
-
-        String username = getActivity().getIntent().getExtras().getString("username");
-
+    private void refresh()
+    {
+        String username = getActivity().getIntent().getExtras().getString("usuario");
         TareaObtenerPets tareaObtenerPets = new TareaObtenerPets();
         tareaObtenerPets.execute("http://vetapplove.xyz/mostrarPets.php", username);
 
-    }*/
+    }
 
     public class TareaObtenerPets extends AsyncTask<String, Void, ArrayList<AddPet>>
     {
@@ -101,7 +100,7 @@ public class PerfilMascotaActivityFragment extends Fragment {
                     JSONObject jsonObject = null;
                     try {
                         jsonObject = jsonArray.getJSONObject(i);
-                  //      idImagen = Integer.valueOf(jsonObject.getString("id"));
+                      //4  idImagen = Integer.valueOf(jsonObject.getString("id"));
                         petName = jsonObject.getString("nameAddPet");
                         petSpecie = jsonObject.getString("species");
                         petRaza = jsonObject.getString("breed");
@@ -110,12 +109,12 @@ public class PerfilMascotaActivityFragment extends Fragment {
 
 
                         //Descargamos la imagen asociada al animal en adopción
-                       // URL urlImagen = new URL("http://vetapplove.xyz/imgPet/" + idImagen + ".jpg");//abro coneexión para esta ruta de imagen
-                       //  HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
-                       // connImagen.connect();
-                        //petlistImg = BitmapFactory.decodeStream(connImagen.getInputStream());
-                        //connImagen.disconnect();
-                        pets.add(new AddPet(petName, petSpecie, petRaza, petBdate, petSexo));//instanciamos el objeto.
+                       /* URL urlImagen = new URL("http://vetapplove.xyz/imgPet/" + idImagen + ".jpg");//abro coneexión para esta ruta de imagen
+                        HttpURLConnection connImagen = (HttpURLConnection) urlImagen.openConnection();
+                        connImagen.connect();
+                        petlistImg = BitmapFactory.decodeStream(connImagen.getInputStream());
+                        connImagen.disconnect();*/
+                        pets.add(new AddPet( petName, petSpecie, petRaza, petBdate, petSexo));//instanciamos el objeto.
 
                     } catch (JSONException e1) {
                         e1.printStackTrace();
